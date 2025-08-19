@@ -5,6 +5,6 @@ const packageFeatureSchema = new mongoose.Schema({
     description: { type: String }
 });
 
-const packageFeature = mongoose.model("packageFeature", packageFeatureSchema);
+const PackageFeature = mongoose.model("PackageFeature", packageFeatureSchema);
 
-module.exports = packageFeature;
+module.exports = PackageFeature;

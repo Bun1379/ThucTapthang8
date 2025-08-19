@@ -5,6 +5,6 @@ const policySchema = new mongoose.Schema({
     url: { type: String, required: true }
 });
 
-const policy = mongoose.model("policy", policySchema);
+const Policy = mongoose.model("Policy", policySchema);
 
-module.exports = policy;
+module.exports = Policy;

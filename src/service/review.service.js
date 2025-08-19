@@ -75,7 +75,10 @@ const getOverviewReviewByProductIdService = async (id) => {
 
 const getReviewByProductIdService = async (productId, filterType, rating, page, limit, sort) => {
     try {
-        let query = { product: productId };
+
+        const objProductId = new mongoose.Types.ObjectId(productId);
+
+        let query = { product: objProductId };
 
         switch (filterType) {
             case "rating":

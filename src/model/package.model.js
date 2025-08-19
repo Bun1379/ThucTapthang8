@@ -8,7 +8,7 @@ const packageSchema = new mongoose.Schema({
     currency_unit: { type: String, required: true },
     features: [
         {
-            feature: { type: mongoose.Schema.Types.ObjectId, ref: "packageFeature", required: true },
+            feature: { type: mongoose.Schema.Types.ObjectId, ref: "PackageFeature", required: true },
             limit_type: { type: String, enum: ["unlimited", "limited", "weekly", "monthly", "yearly", "daily", "text"] },
             limit_value: { type: Number }, // Trường này cho type: "weekly", "monthly", "yearly", "daily", "limited"
             limit_name: { type: String }, // tên đơn vị tùy thuộc vào type: sản phẩm, mẫu, lần 
@@ -17,9 +17,9 @@ const packageSchema = new mongoose.Schema({
     ]
 });
 
-const package = mongoose.model("package", packageSchema);
+const Package = mongoose.model("Package", packageSchema);
 
-module.exports = package;
+module.exports = Package;
 
 // numberProduct: { type: Number, required: true },
 // proBooth: { type: Boolean, required: true, default: true },
