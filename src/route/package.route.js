@@ -10,9 +10,9 @@ const {
 const router = express.Router();
 
 router.post("/", createPackageController);
-router.get("/", getAllPackageController);
+router.post("/getAll", getAllPackageController);
 router.put("/:id", updatePackageController);
 router.delete("/:id", deletePackageController);
-router.get("/table", getTablePackageController);
+router.post("/table", getTablePackageController);
 
 module.exports = router;

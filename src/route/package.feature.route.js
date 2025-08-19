@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.post("/", createPackageFeatureController);
-router.get("/", getAllPackageFeatureController);
+router.post("/getAll", getAllPackageFeatureController);
 router.put("/:id", updatePackageFeatureController);
 router.delete("/:id", deletePackageFeatureController);
 

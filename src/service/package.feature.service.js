@@ -1,8 +1,8 @@
-const packageFeature = require("../model/package.feature.model");
+const packageFeatureModel = require("../model/package.feature.model");
 
 const createPackageFeatureService = async (data) => {
     try {
-        const newPackageFeature = new packageFeature(data);
+        const newPackageFeature = new packageFeatureModel(data);
         await newPackageFeature.save();
         return newPackageFeature;
     } catch (error) {
@@ -12,8 +12,8 @@ const createPackageFeatureService = async (data) => {
 
 const getAllPackageFeatureService = async () => {
     try {
-        const packageFeatures = await packageFeature.find();
-        return packageFeatures;
+        const packageFeatures = await packageFeatureModel.find();
+        return { packageFeatures };
     } catch (error) {
         throw new Error("Error fetching package features: " + error.message);
     }
@@ -21,7 +21,7 @@ const getAllPackageFeatureService = async () => {
 
 const updatePackageFeatureService = async (id, data) => {
     try {
-        const updatedPackageFeature = await packageFeature.findByIdAndUpdate(id, data, { new: true });
+        const updatedPackageFeature = await packageFeatureModel.findByIdAndUpdate(id, data, { new: true });
         return updatedPackageFeature;
     } catch (error) {
         throw new Error("Error updating package feature: " + error.message);
@@ -30,7 +30,7 @@ const updatePackageFeatureService = async (id, data) => {
 
 const deletePackageFeatureService = async (id) => {
     try {
-        await packageFeature.findByIdAndDelete(id);
+        await packageFeatureModel.findByIdAndDelete(id);
     } catch (error) {
         throw new Error("Error deleting package feature");
     }
