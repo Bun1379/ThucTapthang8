@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const user = require("./user.model");
+const order = require("./order.model");
+const product = require("./product.model");
 
 const reviewSchema = new mongoose.Schema(
   {
