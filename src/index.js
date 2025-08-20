@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const http = require("http");
+const { Server } = require("socket.io");
 const connection = require("./config/database");
 
 const packageRoute = require("./route/package.route");
@@ -11,12 +12,22 @@ const policyRoute = require("./route/policy.route");
 const reviewRoute = require("./route/review.route");
 const suggestQuestionRoute = require("./route/suggest.question.route");
 const message = require("./route/message.route");
+const { registerChatHandler } = require("./socketHandle/chathandle");
 
 
 dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
+
+// Setup Socket.IO
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:5173", // FE của bạn
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
 
 app.use(cors({
     origin: "http://localhost:5173", // FE của bạn
@@ -35,6 +46,9 @@ app.use("/api/v1/policy", policyRoute);
 app.use("/api/v1/review", reviewRoute);
 app.use("/api/v1/suggest-question", suggestQuestionRoute);
 app.use("/api/v1/message", message);
+
+// Register Socket.IO handlers
+registerChatHandler(io);
 
 const PORT = process.env.PORT || 3000;
 (async () => {
