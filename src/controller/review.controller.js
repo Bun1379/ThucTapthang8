@@ -3,7 +3,8 @@ const {
     updateReviewService,
     deleteReviewService,
     getOverviewReviewByProductIdService,
-    getReviewByProductIdService
+    getReviewByProductIdService,
+    getReviewBySellerIdService
 } = require("../service/review.service");
 
 const createReviewController = async (req, res) => {
@@ -95,10 +96,29 @@ const getReviewByProductIdController = async (req, res) => {
     }
 };
 
+const getReviewBySellerIdController = async (req, res) => {
+    try {
+        const { sellerId } = req.body;
+        const reviews = await getReviewBySellerIdService(sellerId);
+        return res.status(200).json({
+            status: 200,
+            message: "Get review by seller ID successfully",
+            data: reviews,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            message: error.message,
+            data: null
+        });
+    }
+};
+
 module.exports = {
     createReviewController,
     updateReviewController,
     deleteReviewController,
     getOverviewReviewByProductIdController,
-    getReviewByProductIdController
+    getReviewByProductIdController,
+    getReviewBySellerIdController
 };

@@ -1,10 +1,14 @@
-const reviewModel = require('../model/review.model');
 const mongoose = require('mongoose');
+
+const reviewModel = require('../model/review.model');
+const product = require("../model/product.model");
+
+
 const createReviewService = async (data) => {
     try {
         const newReview = new reviewModel(data);
         await newReview.save();
-        return newReview;
+        return { newReview };
     } catch (error) {
         throw new Error("Error creating review: " + error.message);
     }
@@ -13,7 +17,7 @@ const createReviewService = async (data) => {
 const updateReviewService = async (id, data) => {
     try {
         const updatedReview = await reviewModel.findByIdAndUpdate(id, data, { new: true });
-        return updatedReview;
+        return { updatedReview };
     } catch (error) {
         throw new Error("Error updating review: " + error.message);
     }
@@ -108,9 +112,21 @@ const getReviewByProductIdService = async (productId, filterType, rating, page, 
             .skip(((page || 1) - 1) * (limit || 10))
             .limit(limit || 10)
             .populate("user", "name avatar")
-        return reviews;
+        return { reviews };
     } catch (error) {
         throw new Error("Error fetching reviews: " + error.message);
+    }
+};
+
+const getReviewBySellerIdService = async (sellerId) => {
+    try {
+        const products = await product.find({ seller: sellerId });
+        const productIds = products.map(p => p._id);
+        const reviews = await reviewModel.find({ product: { $in: productIds } })
+            .populate("user", "name avatar")
+        return { reviews };
+    } catch (error) {
+        throw new Error("Error fetching reviews by seller ID: " + error.message);
     }
 };
 
@@ -119,5 +135,6 @@ module.exports = {
     updateReviewService,
     deleteReviewService,
     getOverviewReviewByProductIdService,
-    getReviewByProductIdService
+    getReviewByProductIdService,
+    getReviewBySellerIdService
 };
